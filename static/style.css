@@ -12,9 +12,11 @@ body
 
 h2{
   font-family: "Lucida Console", Monaco, monospace;
+  margin-left:10px;
 }
 h5{
   font-family: "Lucida Console", Monaco, monospace;
+  margin-left:10px;
 }
 
 #response {
@@ -29,6 +31,7 @@ h5{
   border: solid #fff;
   border-width: 5px;
   border-color: #083808;
+
 }
 
 #contact {
@@ -40,6 +43,7 @@ h5{
 .form-control{
   color: #00a900;
   background-color : #333333; 
+  margin-left:10px;
 }
 .form-control::-webkit-input-placeholder { color: #285d28; }  /* WebKit, Blink, Edge */
 .form-control:-moz-placeholder { color: #285d28; }  /* Mozilla Firefox 4 to 18 */
@@ -79,6 +83,9 @@ h5{
 }
 .btn-warning{
   margin-top: 10px;
+}
+.btn-danger{
+  margin-right: 10px;
 }
 
 

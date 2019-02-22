@@ -8,7 +8,6 @@ from OpenSSL import SSL
 import time
 from flask_cors import CORS
 import html
-
 app = Flask(__name__)
 CORS(app)
 
@@ -98,6 +97,7 @@ def submit():
             return jsonify(ret)
     else:
         ret = {"output": "Too many executions. Try to wait a few seconds more between them."} 
+        print ("Returning Too many executions")
         return jsonify(ret)
 
 @app.route('/api/subscribe', methods=['POST'])

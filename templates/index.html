@@ -18,7 +18,7 @@ Thanks!
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135005603-1"></script>
 	<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date());gtag('config', 'UA-135005603-1');</script>
     <link href="static/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/style.css?v=4">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>ASK SKYNET - Query the OpenAI Artificial Intelligence GPT-2 Reduced Model</title>
 </head>
@@ -76,7 +76,7 @@ Thanks!
     }
 
     function suggest() {
-        mySuggestions = ['The next big thing in technology is', 'Autonomous cars are dangerous because', 'Should I use Uber or a taxi? I think you should use Uber because', 'Should I use Uber or a taxi? I think you should use Taxi because', 'Many scientists have concluded that the earth shape is', 'I was in my Spaceship, obiting the Jupiter moons, when suddenly', 'What do you recommend me for a romantic dinner? A white wine or a red wine? I think', 'Who came up with the theory of relativity? The theory of relativity was created by', 'Will AI take consciousness of itself? Artificial Intelligence is evolving a lot, so ', 'What should I do with my life? Maybe doing some', 'Are we alone in the Universe or is there another alien life out there? I think', 'Am I a part of a computer simulation created by an advanced civilization?', 'I was riding my unicorn on the beach, the sunset was beautiful, but suddenly', 'Once upon a time ', 'It was a bright cold day in April, and the clocks were striking thirteen.', 'This is the saddest story I have ever heard.', 'This is the funniest story I have ever heard.', 'In the late summer of that year we lived in a house in a village that looked across the river and the plain to the mountains.', 'Time is not a line but a dimension, like the dimensions of space. ' ];
+        mySuggestions = ['What is the meaning of life? The meaning of life is', 'The next big thing in technology is', 'Autonomous cars are dangerous because', 'Should I use Uber or a taxi? I think you should use Uber because', 'Should I use Uber or a taxi? I think you should use Taxi because', 'Many scientists have concluded that the earth shape is', 'I was in my Spaceship, obiting the Jupiter moons, when suddenly', 'What do you recommend me for a romantic dinner? A white wine or a red wine? I think', 'Who came up with the theory of relativity? The theory of relativity was created by', 'Will AI take consciousness of itself? Artificial Intelligence is evolving a lot, so ', 'What should I do with my life? Maybe doing some', 'Are we alone in the Universe or is there another alien life out there? I think', 'Am I a part of a computer simulation created by an advanced civilization?', 'I was riding my unicorn on the beach, the sunset was beautiful, but suddenly', 'Once upon a time ', 'It was a bright cold day in April, and the clocks were striking thirteen.', 'This is the saddest story I have ever heard.', 'This is the funniest story I have ever heard.', 'In the late summer of that year we lived in a house in a village that looked across the river and the plain to the mountains.', 'Time is not a line but a dimension, like the dimensions of space. ' ];
         document.getElementById('text').value = mySuggestions[Math.floor(Math.random() * mySuggestions.length)];
     }
 
@@ -94,7 +94,7 @@ Thanks!
         document.getElementById("response").style.backgroundColor = "#094c04";
         document.getElementById('response').style.height = "150px";
         new TypeIt('#response', {
-            strings: "Thanks to <a href='https://www.azken.com'>AZKEN</a> and <a href='https://www.dixper.gg'>DIXPER</a> who have provided a 24/7d backup server with the powerful nVidia P4. And thanks to Ismael Faro and Paco Martínez for stopping me developing this in PHP and showing me the marvelous Flask way.",
+            strings: "Thanks to <a href='https://www.azken.com' target='_blank'>AZKEN</a> and <a href='https://www.dixper.gg' target='_blank'>DIXPER</a> who have provided a 24/7d backup server with the powerful nVidia P4. And thanks to Ismael Faro and Paco Martínez for stopping me developing this in PHP and showing me the marvelous Flask way.",
             speed: 1,
             waitUntilVisible: false
         }).go();
@@ -116,8 +116,8 @@ Thanks!
             document.getElementById("circle").style.display = "block";
             document.getElementById('response').style.height = "500px";
             new TypeIt('#response', {
-                strings: "Please wait... I am using a humble GPU to calculate the answer. Thanks!<br>Usually it takes a few seconds, but if this website becomes viral it could take more.<br>In the meantime I could tell you a joke if that happens.",
-                speed: 50,
+                strings: "Please wait... I am doing the inference of the GPT-2 reduced model published by Open AI in a GPU (usually in a nVidia 1080Ti or a P4). <br>This application is in ALPHA, if you have any comments or suggestions, contact me at asierarranz@gmail.com<br><br>Are you still there? And the system is still processing the answer? Don't worry, wait a few seconds more...<br><br>Nope? Well, sorry, maybe the GPU has hang, it will be solved in a few minutes. If not, drop me an email and I will look into it :-)<br>Thanks!",
+                speed: 40,
                 waitUntilVisible: false
             }).go();
             text = document.getElementById('text').value;
