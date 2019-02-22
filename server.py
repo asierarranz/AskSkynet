@@ -47,7 +47,7 @@ def main():
 
 @app.route('/api/submit', methods=['POST'])
 def submit():
-    global last_exec
+    global last_exec,subscribed
     print()
     print()
     print()
@@ -88,8 +88,9 @@ def submit():
         else:
             minutes=int((time.time()-float(last_exec))/60)
             print("minutes")
-            print(int((time.time()-float(last_exec))/60))
-            print(last_exec)
+            print(minutes)
+            print("delay_minutes")
+            print(delay_minutes)
             if(subscribed):
                 ret = {"output": "Too many GPU usage. You have queried Skynet " + str(ocurrences_period) + " times in the last " + str(delay_minutes) + " minutes. <br> Wait " + str(int(delay_minutes-minutes)) + " minutes, or if you want to be in the White List to have unlimited usage, drop me an email to asierarranz@gmail.com"} 
             else:
@@ -174,8 +175,8 @@ def checkUsage():
         ocurrences_period=0
         for line in f.readlines():
             fdata = line.rstrip().split(',') #using rstrip to remove the \n
-            last_exec="0"
             if (ip==fdata[2]):
+                last_exec="0"
                 ocurrences=ocurrences+1
                 last_exec=fdata[1]
                 if(time.time()-float(last_exec)<delay_minutes*60):
