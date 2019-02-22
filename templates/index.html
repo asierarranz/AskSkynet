@@ -1,252 +1,165 @@
 <!DOCTYPE html>
 <html>
+
+<!--
+HELLO!
+If you liked send me some love to asierarranz@gmail.com
+Thanks!
+-->
+
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="static/favicon.ico">
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="https://www.asierarranz.com/js/typeit.min.js"></script>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-<title>ASK SKYNET</title>
-<style type="text/css">
-  body {background-color: #222222;
-    color:#cccccc;
-   font-family: "Lucida Console", Monaco, monospace;
-  }
-
-  input, select, textarea{
-    color: #aaaaaa;
-    background-color : #d1d1d1; 
-}
-
-h2{
-  font-family: "Lucida Console", Monaco, monospace;
-}
-h5{
-  font-family: "Lucida Console", Monaco, monospace;
-}
-
-#response {
-  background-color: #000000;
-  margin: 0 auto;
-  margin-top: 20px;
-  max-width: 1000px;
-  height: 250px;
-  color:#43c739;
-  padding: 10px;
-  border-radius: 20px;
-  border: solid #fff;
-  border-width: 5px;
-  border-color: #083808;
-}
-
-#contact {
-  text-align:center;
-  margin-top:10px;
-
-}
-
-.form-control{
-  color: #00a900;
-  background-color : #333333; 
-}
-.form-control::-webkit-input-placeholder { color: #285d28; }  /* WebKit, Blink, Edge */
-.form-control:-moz-placeholder { color: #285d28; }  /* Mozilla Firefox 4 to 18 */
-.form-control::-moz-placeholder { color: #285d28; }  /* Mozilla Firefox 19+ */
-.form-control:-ms-input-placeholder { color: #285d28; }  /* Internet Explorer 10-11 */
-.form-control::-ms-input-placeholder { color: #285d28; }  /* Microsoft Edge */
-
-.form-control:focus {
-  border-color: #17b438;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6);
-}
-
-
-#circle 
-{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 100px;
-    height: 100px;  
-    display:none;
-}
-
-.loader 
-{
-  width: calc(100% - 0px);
-  height: calc(100% - 0px);
-  border: 15px solid #48545F;
-  border-top: 15px solid #30FF06;
-  border-radius: 50%;
-  animation: rotate 1.5s linear infinite;
-}
-
-.btn-info{
-  margin-top: 10px;
-}
-.btn-warning{
-  margin-top: 10px;
-}
-
-
-@keyframes rotate {
-100% {transform: rotate(360deg);}
-} 
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <script src="static/jquery1.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script src="static/typeit.min.js"></script>
+    <script type="text/javascript" async src="static/twitter.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135005603-1"></script>
+	<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date());gtag('config', 'UA-135005603-1');</script>
+    <link href="static/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>ASK SKYNET - Query the OpenAI Artificial Intelligence GPT-2 Reduced Model</title>
 </head>
 
 <body>
-<div class="container">
-  <div class="row">
-    <h2>Ask SkyNet</h2>
-    <h5>Opening OpenAI for everyone :-)</h5>
-    <!--<h5>{{message}}</h5>-->
-       <div id="skynetinput">
-          <div class="input-group col-md-12">
-            <input id=text type="text" class="search-query form-control" placeholder="Write your own sentence or click RANDOMIZE to play with some examples (The answer will be always different!)" onfocus="clearText()" value="The answer to the ultimate question of life, the universe and everything is" />
-            <span class="input-group-btn">
+    <div class="container">
+        <div class="row">
+            <h2>Ask SkyNet</h2>
+            <h5>Opening OpenAI for everyone :-)</h5>
+            <div id="skynetinput">
+                <div class="input-group col-md-12">
+                    <input id=text type="text" class="search-query form-control" placeholder="Write your own sentence or click RANDOMIZE to play with some examples (The answer will be always different!)" onfocus="clearText()" value="The answer to the ultimate question of life, the universe and everything is" />
+                    <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" onclick="sendText()" id="send">
                 <span class="">ASK 🤖</span>
-              </button>
-            </span>
-          </div>
-          <center><button type="button" class="btn btn-warning" onclick="suggest()"><i class="fa fa-random"></i> RANDOMIZE (funny) input</button> <button type="button" class="btn btn-info" onclick="info()">Wait a second... What is this about?</button></center>
-          <!--<center><button class="btn btn-warning btn-xs" onclick="subscribe()"><i class=""></i> Test</button></center>-->
-      </div>
+                    </button>
+                    </span>
+                </div>
+                <center>
+                    <button type="button" class="btn btn-warning" onclick="suggest()"><i class="fa fa-random"></i> RANDOMIZE (funny) input</button>
+                    <button type="button" class="btn btn-info" onclick="info()">Wait a second... What is this about?</button>
+                </center>
+            </div>
 
-  </div>
-</div>
-<div id="response"></div>
-<div id="response2"></div>
+        </div>
+    </div>
+    <div id="response"></div>
+    <div id="response2"></div>
 
-<div id="contact">
-  <a class="twitter-follow-button"
-  href="https://twitter.com/asierarranz"
-  data-size="large">
-Follow @asierarranz</a>
-</div>
+    <div id="contact">
+        <a class="twitter-follow-button" href="https://twitter.com/asierarranz" data-size="large">Follow @asierarranz</a>
+        <br><a href="#" onclick="thanks()">Acknowledgments</a> ❤️
+    </div>
 
-<div id="circle">
-      <div class="loader">
-      </div>
-  </div> 
-  <div class="g-ytsubscribe" data-channelid="UCfpysSCYogYLei_dVlu2s-A" data-layout="full" data-theme="dark" data-count="default" ontap="notify()"></div>
-  </body>
+    <div id="circle">
+        <div class="loader">
+        </div>
+    </div>
+    <div class="g-ytsubscribe" data-channelid="UCfpysSCYogYLei_dVlu2s-A" data-layout="full" data-theme="dark" data-count="default" ontap="notify()"></div>
+</body>
 
-  <script>
-    var cleared=false;
-    function subscribe()
-    {
-       fetch('https://askskynet.com/api/subscribe?youtube=true',
-            {
-              method: "POST"
+<script>
+    var cleared = false;
+
+    function subscribe() {
+        fetch('https://askskynet.com/api/subscribe?youtube=true', {
+                method: "POST"
             })
-        .then(function(response) {
-          return response.json();
-        }).then((ret) => {
-          console.log(ret);
-          //document.getElementById('response').innerHTML = ret.output;
-          
-        });
-      document.location.href="http://asierarranz.com/youtube";
-    }
-    function suggest()
-    {
-      mySuggestions=['The next big thing in technology is', 'Autonomous cars are dangerous', 'Should I use Uber or a taxi?'];    
-      document.getElementById('text').value=mySuggestions[Math.floor(Math.random() * mySuggestions.length)];
+            .then(function(response) {
+                return response.json();
+            }).then((ret) => {
+                console.log(ret);
+            });
+        document.location.href = "http://asierarranz.com/youtube";
     }
 
-    function info()
-    {
-      document.getElementById("response").style.backgroundColor = "#094c04";
-      document.getElementById('response').style.height="500px";
-      new TypeIt('#response', {
-          strings: "This website allows you to give a sentence to 'SkyNet', and it will write a context following this sentece with a quite credible speech.<br>This has been created thanks to the research of OpenAI with the GPT-2 model. As you can see, AI is becoming very powerful and even today is almost impossible to distinguis a 'real' human thing from a machine made one, so you should use it to <b>make the World a better place</b>.<br><br>Remember...<br><b>With great power comes great responsibility.</b><br><br>ENJOY!<br><br>--<br>Asier Arranz (<a href='https://www.twitter.com/asierarranz' target='_blank'>@asierarranz</a>)<br><a href='https://www.asierarranz.com' target='_blank'>www.asierarranz.com</a><br>asierarranz@gmail.com",
-          speed: 1,
-          waitUntilVisible: false
+    function suggest() {
+        mySuggestions = ['The next big thing in technology is', 'Autonomous cars are dangerous because', 'Should I use Uber or a taxi? I think you should use Uber because', 'Should I use Uber or a taxi? I think you should use Taxi because', 'Many scientists have concluded that the earth shape is', 'I was in my Spaceship, obiting the Jupiter moons, when suddenly', 'What do you recommend me for a romantic dinner? A white wine or a red wine? I think', 'Who came up with the theory of relativity? The theory of relativity was created by', 'Will AI take consciousness of itself? Artificial Intelligence is evolving a lot, so ', 'What should I do with my life? Maybe doing some', 'Are we alone in the Universe or is there another alien life out there? I think', 'Am I a part of a computer simulation created by an advanced civilization?', 'I was riding my unicorn on the beach, the sunset was beautiful, but suddenly', 'Once upon a time ', 'It was a bright cold day in April, and the clocks were striking thirteen.', 'This is the saddest story I have ever heard.', 'This is the funniest story I have ever heard.', 'In the late summer of that year we lived in a house in a village that looked across the river and the plain to the mountains.', 'Time is not a line but a dimension, like the dimensions of space. ' ];
+        document.getElementById('text').value = mySuggestions[Math.floor(Math.random() * mySuggestions.length)];
+    }
+
+    function info() {
+        document.getElementById("response").style.backgroundColor = "#094c04";
+        document.getElementById('response').style.height = "500px";
+        new TypeIt('#response', {
+            strings: "This website allows you to give a sentence to 'SkyNet', and it will write a context following this sentece with a quite credible speech.<br>This has been created thanks to the research of OpenAI with the GPT-2 model. As you can see, AI is becoming very powerful and even today is almost impossible to distinguis a 'real' human thing from a machine made one, so you should use it to <b>make the World a better place</b>.<br><br>Remember...<br><b>With great power comes great responsibility.</b><br><br>ENJOY!<br><br>--<br>Asier Arranz (<a href='https://www.twitter.com/asierarranz' target='_blank'>@asierarranz</a>)<br><a href='https://www.asierarranz.com' target='_blank'>www.asierarranz.com</a><br>asierarranz@gmail.com",
+            speed: 1,
+            waitUntilVisible: false
         }).go();
     }
 
-    function clearText()
-    {   
-     if (!cleared)
-        document.getElementById('text').value="";
-     cleared=true;
+    function thanks() {
+        document.getElementById("response").style.backgroundColor = "#094c04";
+        document.getElementById('response').style.height = "150px";
+        new TypeIt('#response', {
+            strings: "Thanks to <a href='https://www.azken.com'>AZKEN</a> and <a href='https://www.dixper.gg'>DIXPER</a> who have provided a 24/7d backup server with the powerful nVidia P4. And thanks to Ismael Faro and Paco Martínez for stopping me developing this in PHP and showing me the marvelous Flask way.",
+            speed: 1,
+            waitUntilVisible: false
+        }).go();
     }
 
+    function clearText() {
+        if (!cleared)
+            document.getElementById('text').value = "";
+        cleared = true;
+    }
 
     function sendText() {
-      text = document.getElementById('text').value;
-      text= text.trim();
-      console.log(text.length);
-      if (text.length>5)
-      {
-      document.getElementById("skynetinput").style.display = "none";
-      document.getElementById("response").style.backgroundColor = "#094c04";
-      document.getElementById("circle").style.display = "block";
-      document.getElementById('response').style.height="500px";
-      new TypeIt('#response', {
-          strings: "Please wait... I am using a humble GPU to calculate the answer. Thanks!<br>Usually it takes a few seconds, but if this website becomes viral it could take more.<br>In the meantime I could tell you a joke if that happens.",
-          speed: 50,
-          waitUntilVisible: false
-        }).go();
-      text = document.getElementById('text').value;
-      console.log(text);
-      fetch('https://askskynet.com/api/submit?text='+text,
-            {
-              method: "POST"
-            })
-        .then(function(response) {
-          return response.json();
-        }).then((ret) => {
-          console.log(ret);
-          //document.getElementById('response').innerHTML = ret.output;
-          document.getElementById("circle").style.display = "none";
-          new TypeIt('#response', {
-          strings: ret.output,
-          speed: 30,
-          waitUntilVisible: false
-        }).go();
-          if (ret.output.includes("Subscribe"))
-          {
-            document.getElementById('response').style.height="150px";
-            document.getElementById('response2').innerHTML = '<center><button class="btn btn-danger btn-xs" ontap="subscribe()" onclick="subscribe()"><i class=""></i> Subscribe to my Youtube channel </button></center>';
+        text = document.getElementById('text').value;
+        text = text.trim();
+        console.log(text.length);
+        if (text.length > 5) {
+            document.getElementById("skynetinput").style.display = "none";
             document.getElementById("response").style.backgroundColor = "#094c04";
-          }
-          else
-          {
-            document.getElementById('response').style.height="500px";
-            document.getElementById("response").style.backgroundColor = "#094c04";
-          }
-        });
+            document.getElementById("circle").style.display = "block";
+            document.getElementById('response').style.height = "500px";
+            new TypeIt('#response', {
+                strings: "Please wait... I am using a humble GPU to calculate the answer. Thanks!<br>Usually it takes a few seconds, but if this website becomes viral it could take more.<br>In the meantime I could tell you a joke if that happens.",
+                speed: 50,
+                waitUntilVisible: false
+            }).go();
+            text = document.getElementById('text').value;
+            console.log(text);
+            fetch('https://askskynet.com/api/submit?text=' + text, {
+                    method: "POST"
+                })
+                .then(function(response) {
+                    return response.json();
+                }).then((ret) => {
+                    console.log(ret);
+                    document.getElementById("circle").style.display = "none";
+                    new TypeIt('#response', {
+                        strings: ret.output,
+                        speed: 30,
+                        waitUntilVisible: false
+                    }).go();
+                    if (ret.output.includes("Subscribe")) {
+                        document.getElementById('response').style.height = "150px";
+                        document.getElementById('response2').innerHTML = '<center><button class="btn btn-danger btn-xs" ontap="subscribe()" onclick="subscribe()"><i class=""></i> Subscribe to my Youtube channel </button></center>';
+                        document.getElementById("response").style.backgroundColor = "#094c04";
+                    } else {
+                        document.getElementById('response').style.height = "500px";
+                        document.getElementById("response").style.backgroundColor = "#094c04";
+                    }
+                });
+        } else {
+            document.getElementById('text').placeholder = "Write a longer input!";
+            document.getElementById('text').value = "";
+        }
     }
-    else
-    {
-      document.getElementById('text').placeholder="Write a longer input!";
-      document.getElementById('text').value="";
-    }
-    }
-  </script>
+</script>
 
-  <script type="text/javascript">
-var input = document.getElementById("text");
-input.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.getElementById("send").click();
-  }
-});
+<script type="text/javascript">
+    var input = document.getElementById("text");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("send").click();
+        }
+    });
 
-//var urlParams = new URLSearchParams(window.location.search)
-//var inputtext=urlParams.get('ask'); 
-//if (inputtext.length>0)
-//document.getElementById('text').value=inputtext;
-  </script>
+</script>
 
- 
-</html>  
+</html>

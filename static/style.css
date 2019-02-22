@@ -1,0 +1,87 @@
+body
+{
+    background-color: #222222;
+    color:#cccccc;
+   font-family: "Lucida Console", Monaco, monospace;
+}
+
+  input, select, textarea{
+    color: #aaaaaa;
+    background-color : #d1d1d1; 
+}
+
+h2{
+  font-family: "Lucida Console", Monaco, monospace;
+}
+h5{
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+#response {
+  background-color: #000000;
+  margin: 0 auto;
+  margin-top: 20px;
+  max-width: 1000px;
+  height: 250px;
+  color:#43c739;
+  padding: 10px;
+  border-radius: 20px;
+  border: solid #fff;
+  border-width: 5px;
+  border-color: #083808;
+}
+
+#contact {
+  text-align:center;
+  margin-top:10px;
+
+}
+
+.form-control{
+  color: #00a900;
+  background-color : #333333; 
+}
+.form-control::-webkit-input-placeholder { color: #285d28; }  /* WebKit, Blink, Edge */
+.form-control:-moz-placeholder { color: #285d28; }  /* Mozilla Firefox 4 to 18 */
+.form-control::-moz-placeholder { color: #285d28; }  /* Mozilla Firefox 19+ */
+.form-control:-ms-input-placeholder { color: #285d28; }  /* Internet Explorer 10-11 */
+.form-control::-ms-input-placeholder { color: #285d28; }  /* Microsoft Edge */
+
+.form-control:focus {
+  border-color: #17b438;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 0, 0.6);
+}
+
+
+#circle 
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100px;
+    height: 100px;  
+    display:none;
+}
+
+.loader 
+{
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  border: 15px solid #48545F;
+  border-top: 15px solid #30FF06;
+  border-radius: 50%;
+  animation: rotate 1.5s linear infinite;
+}
+
+.btn-info{
+  margin-top: 10px;
+}
+.btn-warning{
+  margin-top: 10px;
+}
+
+
+@keyframes rotate {
+100% {transform: rotate(360deg);}
+} 
