@@ -7,6 +7,7 @@ from api import load_ai, run_ai
 from OpenSSL import SSL
 import time
 from flask_cors import CORS
+import html
 
 app = Flask(__name__)
 CORS(app)
@@ -57,6 +58,7 @@ def submit():
     print("SUBMIT executed")
     query_params = request.args
     text = query_params["text"]
+    text=html.escape(text) # avoid HTML input
     print("*"*80)
     print("INPUT:\n", text)
     print("*"*80)
