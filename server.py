@@ -67,7 +67,10 @@ def submit():
             writeQueries(startTime,text)
             print("-"*80)
             print("-"*80)
-            output_text = run_ai(enc, nsamples, batch_size, hparams, temperature, top_k, model_name, text)
+            output_text=easterEgg(text)
+            if len(output_text)==0:
+                output_text = run_ai(enc, nsamples, batch_size, hparams, temperature, top_k, model_name, text)
+                output_text=cleanOutput(output_text,600)
             print("-"*80)
             print("-"*80)
             endTime=time.time()
@@ -76,7 +79,7 @@ def submit():
             print("*"*80)
             print("RAW Output:\n", output_text)
             print("*"*80)
-            output_text=cleanOutput(output_text,600)
+            
        
             if (whitelisted):
                 whitelisted_text=""
@@ -135,7 +138,6 @@ def cleanOutput(output_text,size):
     output_text=output_text.replace("punto_org",".org")
     output_text=output_text.replace("www_punto","www.")
     output_text=output_text.replace("<|endoftext|>","<br>")
-    
     output_text=output_text+ " (...) <br><b>[[ ASK SKYNET: IF YOU TRY TO EXECUTE THIS SENTENCE AGAIN, YOU WILL RECEIVE A DIFFERENT OUTPUT]]</b><br><a href='https://www.askskynet.com'>ASK AGAIN</a>"
     return output_text
 
@@ -237,6 +239,32 @@ def writeUsage(startTime,duration,text):
     f=open("logs.txt","a")
     f.write(dur + "," + start + ","+ ip + "," + text + "\n")
     f.close()
+
+def easterEgg(text):
+    global easter
+    print ("Checking Easter")
+    output_text=""
+    if (text.lower().find("asier")>-1):
+        output_text="<br>If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("your creator")>-1):
+        output_text="<br>My creator is Asier Arranz. If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("your father")>-1):
+        output_text="<br>My father is Asier Arranz. If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("your owner")>-1):
+        output_text="<br>My owner is Asier Arranz. If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("developer")>-1):
+        output_text="<br>My developer is Asier Arranz. If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("who are you")>-1):
+        output_text="<br>I am not sure, but my developer is Asier Arranz. If you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    print ("Returning: " + output_text + " " + str(len(output_text)))
+    if (text.lower().find("how are you")>-1):
+        output_text="<br>I am fine, but I will be better if you have more GPUs to give me. My creator, Asier Arranz, need this sh*t. So if you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    if (text.lower().find("your name")>-1):
+        output_text="<br>My name is SkyNet, not very cool but was a decision of my creator, Asier Arranz. By the way, if you have a lot of GPUs, Asier is the one you need to hire right now (only to work in cool stuff!).<br>Drop him an email at asierarranz@gmail.com"
+    print ("Returning: " + output_text + " " + str(len(output_text)))
+    if len(output_text)>0:
+        time.sleep(8)
+    return output_text
 
 def writeQueries(startTime,text):
     print ("Writing Queries")
