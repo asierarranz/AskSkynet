@@ -20,20 +20,14 @@ temperature = 1
 top_k = 0
 model_name = '117M'
 
-ocurrences=0
-ocurrences_period=0
-last_exec=0
 delay_minutes=30
 delay_executions=3
 whitelisted=False
-subscribed=False
 
-ip=""
 
 
 @app.route('/')
 def main():
-    global ip
     ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
     print()
     print()
@@ -47,7 +41,6 @@ def main():
 
 @app.route('/api/submit', methods=['POST'])
 def submit():
-    global last_exec,subscribed
     print()
     print()
     print()
@@ -62,7 +55,8 @@ def submit():
     print("INPUT:\n", text)
     print("*"*80)
     if not checkDDos() and len(text)>0:
-        if (checkUsage()):
+        ocurrences_period,last_exec=checkUsage()
+        if (ocurrences_period<delay_executions):
             startTime=time.time()
             writeQueries(startTime,text)
             print("-"*80)
@@ -90,14 +84,17 @@ def submit():
             return jsonify(ret)
         else:
             minutes=int((time.time()-float(last_exec))/60)
+           
+            if(checkSubscriber()):
+                delay_minutes=10
+                ret = {"output": "WOW! You really like this software! You have queried Skynet " + str(ocurrences_period) + " times in the last " + str(delay_minutes) + " minutes. <br> Wait " + str(int(delay_minutes-minutes)) + " minutes, or if you want to be in the White List to have unlimited usage, drop me an email to asierarranz@gmail.com.< br>And if you want more magic than this, you can hire me. I accept GPUs as payment! :-)"} 
+            else:
+                delay_minutes=30
+                ret = {"output": "Too many GPU usage. You have queried Skynet " + str(ocurrences_period) + " times in the last " + str(delay_minutes) + " minutes. <br> Wait " + str(int(delay_minutes-minutes)) + " minutes, or Subscribe to my Youtube Channel (below) to be a premium user and have more executions and smaller waiting times! :-D<br><br>If you want to be in the White List to have unlimited usage, drop me an email to <b>asierarranz@gmail.com</b> or contact me on Twitter at <b>@asierarranz</b>"} 
             print("minutes")
             print(minutes)
             print("delay_minutes")
             print(delay_minutes)
-            if(subscribed):
-                ret = {"output": "Too many GPU usage. You have queried Skynet " + str(ocurrences_period) + " times in the last " + str(delay_minutes) + " minutes. <br> Wait " + str(int(delay_minutes-minutes)) + " minutes, or if you want to be in the White List to have unlimited usage, drop me an email to asierarranz@gmail.com"} 
-            else:
-                ret = {"output": "Too many GPU usage. You have queried Skynet " + str(ocurrences_period) + " times in the last " + str(delay_minutes) + " minutes. <br> Wait " + str(int(delay_minutes-minutes)) + " minutes, or Subscribe to my Youtube Channel to be a premium user and have more executions and smaller waiting times! :-D<br><br>If you want to be in the White List to have unlimited usage, drop me an email to <b>asierarranz@gmail.com</b> or contact me on Twitter at <b>@asierarranz</b>"} 
             return jsonify(ret)
     else:
         ret = {"output": "Too many executions. Try to wait a few seconds more between them."} 
@@ -106,12 +103,11 @@ def submit():
 
 @app.route('/api/subscribe', methods=['POST'])
 def subscribe():
-    global ip
     print("SUBSCRIBE event")
     query_params = request.args
     textsub = query_params["youtube"]
     if (textsub.find("true")>-1):
-        #ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
+        ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
         f=open("subscribers.txt","a")
         f.write(ip+"\n")
         f.close()
@@ -142,36 +138,36 @@ def cleanOutput(output_text,size):
     return output_text
 
 def checkSubscriber():
-    global subscribed,ip
     print("Checking subscriber")
     subscriber=False
-    #ip=str(request.headers.get('X-Forwarded-For', request.remote_addr)) # pasar a var global?
+    ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
     f=open("subscribers.txt","r")
     for line in f.readlines():
         fdata = line.rstrip() #using rstrip to remove the \n
         if (ip==fdata):
             subscriber=True
-            subscribed=subscriber
     if (subscriber):
         print("Subscriber found: " + ip)
+    else:
+        print("Subscriber NOT found: " + ip)
     f.close()
     return subscriber
 
     
 
 def checkUsage():
-    global ip
+    last_exec="0"
     print("Checking usage")
     whitelist=checkWhitelist()
     subscriber=checkSubscriber()
     if whitelist:
-        return True
+        return 0,0
     else:
-        global ocurrences,ocurrences_period,last_exec,delay_minutes,delay_executions
+        global delay_minutes,delay_executions
         if subscriber:
             delay_minutes=10
             delay_executions=5
-        #ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
+        ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
         f=open("logs.txt","r")
         ocurrences=0
         ocurrences_period=0
@@ -187,19 +183,19 @@ def checkUsage():
         print(ip + " was executed " + str(ocurrences) + " times. Last exec was " + str(int(time.time()-float(last_exec))) + " seconds ago")
         print("="*40)
         print("This ip has expent " + str(ocurrences_period) + " executions of its " + str(delay_executions) + " it has in a period of " + str(delay_minutes) + " minutes")
-        if (ocurrences_period>delay_executions):
-            print("Block usage")
-            return False
-        else:
-            print("Allow usage")
-            return True
+        #if (ocurrences_period>delay_executions):
+         #   print("Block usage")
+         #   return False
+       # else:
+       #     print("Allow usage")
+      #      return True
+        return ocurrences_period,last_exec
 
 
 def checkDDos():
-    global ip
     print("Checking DDOS")
     ddos=False
-    #ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
+    ip=str(request.headers.get('X-Forwarded-For', request.remote_addr))
     f=open("logs_queries.txt","r")
     for line in f.readlines():
         fdata = line.rstrip().split(',') #using rstrip to remove the \n
@@ -215,10 +211,10 @@ def checkDDos():
     return ddos
 
 def checkWhitelist():
-    global whitelisted,ip
+    global whitelisted
     print("Checking Whitelist")
     whitelist=False
-    #ip=str(request.headers.get('X-Forwarded-For', request.remote_addr)) # pasar a var global?
+    ip=str(request.headers.get('X-Forwarded-For', request.remote_addr)) # pasar a var global?
     f=open("whitelist.txt","r")
     for line in f.readlines():
         fdata = line.rstrip() #using rstrip to remove the \n
